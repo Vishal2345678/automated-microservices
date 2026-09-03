@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__, template_folder=".")
 
 
-BACKEND_URL = "http://host.docker.internal:5000"
+BACKEND_URL = "http://backend-service:5000"
 
 
 @app.route("/")

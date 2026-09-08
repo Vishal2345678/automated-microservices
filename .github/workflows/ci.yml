@@ -5,16 +5,40 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Build Backend Docker Image
-        run: docker build -t automated-backend:ci ./backend
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::879786009908:role/GitHubActions-ECR-PushRole
+          aws-region: us-east-1
 
-      - name: Build Frontend Docker Image
-        run: docker build -t automated-frontend:ci ./frontend
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push backend
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/automated-backend:$IMAGE_TAG ./backend
+          docker push $ECR_REGISTRY/automated-backend:$IMAGE_TAG
+
+      - name: Build and push frontend
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/automated-frontend:$IMAGE_TAG ./frontend
+          docker push $ECR_REGISTRY/automated-frontend:$IMAGE_TAG

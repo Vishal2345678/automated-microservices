@@ -4,6 +4,11 @@ metadata:
   name: backend
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: backend
@@ -14,6 +19,6 @@ spec:
     spec:
       containers:
         - name: backend
-          image: 879786009908.dkr.ecr.us-east-1.amazonaws.com/automated-backend:1.0
+          image: 879786009908.dkr.ecr.us-east-1.amazonaws.com/automated-backend:1d4ad0b807d175075bae4d1aac6d2ff1a2518d15
           ports:
             - containerPort: 5000

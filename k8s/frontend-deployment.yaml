@@ -1,9 +1,14 @@
-apiVersion: apps/v1
+﻿apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: frontend
@@ -14,6 +19,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: 879786009908.dkr.ecr.us-east-1.amazonaws.com/automated-frontend:1.0
+          image: 879786009908.dkr.ecr.us-east-1.amazonaws.com/automated-frontend:1d4ad0b807d175075bae4d1aac6d2ff1a2518d15
           ports:
             - containerPort: 8080

@@ -19,6 +19,6 @@ spec:
     spec:
       containers:
         - name: backend
-          image: 879786009908.dkr.ecr.us-east-1.amazonaws.com/automated-backend:05dd9dcddc49d9fd3da457e31fc83e7008f30d5e
+          image: 879786009908.dkr.ecr.us-east-1.amazonaws.com/automated-backend:aaa905b1a5f18571e7f7eef366cfe087e81877c0
           ports:
             - containerPort: 5000

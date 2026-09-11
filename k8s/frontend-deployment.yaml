@@ -19,6 +19,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: 879786009908.dkr.ecr.us-east-1.amazonaws.com/automated-frontend:1d4ad0b807d175075bae4d1aac6d2ff1a2518d15
+          image: 879786009908.dkr.ecr.us-east-1.amazonaws.com/automated-frontend:05dd9dcddc49d9fd3da457e31fc83e7008f30d5e
           ports:
             - containerPort: 8080
